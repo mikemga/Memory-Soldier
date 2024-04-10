@@ -27,11 +27,13 @@ var currentTopicData;
 var topicOver = false;
 var executed = false;
 //create movement
+var currentHeroImgSuffix = 1;
 //speed 
 var opponent_speed_multiplier = 0.15;
 var next_opponent_appearance_delay_in_ms = 1000;
 var lastFrameTimeStamp = Date.now();
 var pixelMovePerMs = 1;
+var heroImg = document.getElementById("heroImg");
 var injectTopic = function () {
     //document.getElementById("topic")?.innerHTML = "";
 };
@@ -128,4 +130,13 @@ var killOpponent = function (opponent) {
     setTimeout(launchNewOpponent, next_opponent_appearance_delay_in_ms);
 };
 var animateCharacter = function () {
+    if (!heroImg)
+        return;
+    if (currentHeroImgSuffix === 8) {
+        currentHeroImgSuffix = 1;
+    }
+    else {
+        currentHeroImgSuffix++;
+    }
+    heroImg.style.src = "hero".concat(currentHeroImgSuffix, ".p");
 };

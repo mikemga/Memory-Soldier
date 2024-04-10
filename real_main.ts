@@ -1,6 +1,3 @@
-console.log("this is the real main");
-
-//opponent
 
 
 type OpponentData = string;
@@ -11,14 +8,31 @@ class Opponent {
 
    constructor(data: OpponentData){
      this.data = data;
-     this.element = document.createElement("div");
+     this.element = createOpponentElement();
    }
 }
 
 
+const createOpponentElement = () => {
+  const element = document.createElement("div");
+  element.classList.add("opponent");
+  return element;
+}
+
 
 window.onload = () => {
-  launchNextOpponent();
+  buildInjectAndlaunchNextOpponent();
+}
+
+const buildInjectAndlaunchNextOpponent = () => { 
+  //build
+  const opponent = buildOpponent("data");
+  //inject
+  injectOpponent(opponent);
+  //launch
+
+  triggerOpponentMovement(opponent);
+
 }
 
 const launchNextOpponent = () => {
@@ -28,7 +42,13 @@ const launchNextOpponent = () => {
 
 const getNextOpponent = () => {
     const data = getNextOpponentData();
-    return buildOpponent(data);
+    const opponent = buildOpponent(data);
+    injectOpponent(opponent);
+    return opponent;
+}
+
+const injectOpponent = (opponent: Opponent) => {
+   document.body.append(opponent.element);
 }
 
 const getNextOpponentData = (): string => {
@@ -40,12 +60,5 @@ const triggerOpponentMovement = (opponent: Opponent) => {
 }
 
 const buildOpponent = (data: string) => {
-  const opponent = new Opponent(data);
-  initOpponentStyle(opponent);
-  return opponent;
-}
-
-const initOpponentStyle = (opponent: Opponent) => {
-    opponent.element.classList.add("opponent");
-}
-
+  return new Opponent(data);
+ }
